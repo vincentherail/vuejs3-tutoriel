@@ -2,15 +2,22 @@
 const app = Vue.createApp({
     data() {
         return {
-            showBooks: true,
-            title: 'The Final Empire',
-            author: 'brandon Sanderson',
-            age: 45
+            url: 'http://www.thenetninja.co.uk',
+            books: [
+                {title: 'Hey', author: 'GRAND', img: 'assets/1.jpg', isFav: true},
+                {title: 'Ho', author: 'PETIT', img: 'assets/2.jpg', isFav: false},
+                {title: 'Ha', author: 'MOYEN', img: 'assets/3.jpg', isFav: true}
+            ]
         }
     },
     methods: {
-        toggleShowBooks() {
-            this.showBooks = !this.showBooks
+        toggleClass(book) {
+            book.isFav = !book.isFav
+        }
+    },
+    computed: {
+        filteredBooks() {
+            return this.books.filter((book) => book.isFav)
         }
     }
 })
