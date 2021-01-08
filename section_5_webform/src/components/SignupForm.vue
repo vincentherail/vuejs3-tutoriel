@@ -1,16 +1,81 @@
 <template>
-  <form>
+  <!-- .prevent empêche le default behavior : rechargement de la page -->
+  <form @submit.prevent="handleSubmit">
     <label>Email:</label>
-    <input type="email" required >
+    <input type="email" required v-model="email">
+
+    <label>Password:</label>
+    <input type="password" required v-model="password">
+    <div v-if="passwordError" class="error">{{ passwordError }}</div>
+
+    <label>Role:</label>
+    <select v-model="role">
+        <option value="developer">Web Developer</option>
+        <option value="designer">Web Designer</option>
+    </select>
+    <div class="terms">
+        <input type="checkbox" v-model="terms" required >
+        <label>Accept terms and conditions</label>
+    </div>
+
+    <label>Skills:</label>
+   <!-- Quand touche ENTRE relachée, la fonction vérifie si une skill contient une virgule, ce qui signifie qu'elle est finie d'être renseignée // problème pas bon car event par default de validation du form, ça déclenche l’envoie à chaque fois, fifférent de la méthode .alt de Shaun que je n’arrivais pas à faire fonctionner-->
+    <input type="text" v-model="tempSkill" @keyup.enter="addSkill">
+    <div v-for="skill in skills" :key="skill" class="pill" @click="deleteSkill(skill)">
+        {{skill}}
+    </div>
+
+    <div class="submit">
+        <button>Create an account</button>
+    </div>
+
   </form>
+
 </template>
 
 <script>
 export default {
     data() {
         return {
-            // value will be updated with the value typed in form
-            email: ''
+            // value will be updated with the value typed in form thanks to v-model
+            email: '',
+            password: '',
+            // initial value will be kind of default value
+            role: 'designer',
+            terms: false,
+            tempSkill: '',
+            skills: [],
+            passwordError: ''
+        }
+    },
+    methods: {
+        addSkill() {
+            // condition validée si Entrée pressée après une valeur 
+            if(this.tempSkill) {
+                // check if skills array already include the new skill
+                if(!this.skills.includes(this.tempSkill)) {
+                    // tempSkill ajouter au tableau skills
+                    this.skills.push(this.tempSkill)
+                }
+                this.tempSkill = ''
+            }
+        },
+        deleteSkill(skill) {
+            this.skills = this.skills.filter((item) => {
+                // return boolean while cycling through this.skills
+                // the array is filter in case of FALSE
+                return skill !== item
+            })
+        },
+        handleSubmit() {
+            // validate password
+            this.passwordError = this.password.length > 5 ? '' : 'Password need to be longer'
+            if(!this.passwordError) {
+                console.log('email : ', this.email)
+                console.log('password : ', this.password)
+                console.log('role : ', this.role)
+                console.log('skills : ', this.skills)
+            }
         }
     }
 }
@@ -34,7 +99,7 @@ export default {
     letter-spacing: 1px;
     font-weight: bold;
   }
-  input {
+  input, select {
     display: block;
     padding: 10px 6px;
     width: 100%;
@@ -42,5 +107,41 @@ export default {
     border: none;
     border-bottom: 1px solid #ddd;
     color: #555;
+  }
+input[type="checkbox"] {
+    display: inline-block;
+    width: 16px;
+    margin: 0 10px 0 0;
+    position: relative;
+    top: 2px;
+  }
+.pill {
+    display: inline-block;
+    margin: 20px 10px 0 0;
+    padding: 6px 12px;
+    background: #eee;
+    border-radius: 20px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color: #777;
+    cursor: pointer;
+  }
+button {
+    background: #0b6dff;
+    border: 0;
+    padding: 10px 20px;
+    margin-top: 20px;
+    color: white;
+    border-radius: 20px;
+  }
+.submit {
+    text-align: center;
+  }
+.error {
+    color: #ff0062;
+    margin-top: 10px;
+    font-size: 0.8em;
+    font-weight: bold;
   }
 </style>
