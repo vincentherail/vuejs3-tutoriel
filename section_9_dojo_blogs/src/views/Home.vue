@@ -1,26 +1,39 @@
 <template>
   <div class="home">
     <h1>Home</h1>
-      <button @click="showPosts = !showPosts">Toggle post</button>
-      <PostList v-if="showPosts" :posts="posts"/>
+      <div v-if="error">{{ error }}</div>
+      <div v-if="posts.length">
+        <PostList :posts="posts"/>
+      </div>
+      <div v-else>
+        <Spinner />
+      </div>
   </div>
 </template>
 
 <script>
 import PostList from '../components/PostList'
-import { computed, ref, watch, watchEffect } from 'vue'
+import getPosts from '../composables/getPosts'
+import Spinner from '../components/Spinner'
+
 export default {
   name: 'Home',
-  components: {PostList},
-  setup() {    
-    const posts = ref([
-      {title: 'welcome to the blog', body: 'lorem ipsum', id:1},
-      {title: 'welcomg', body: 'lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum', id:2}
-    ])
+  components: {PostList, Spinner},
+  setup() {   
+    // destructure pour récuperer les valeurs et fonctions de getPosts 
+    const {posts, error, load} = getPosts()
 
-    const showPosts = ref(true)
+    load()
 
-    return { posts, showPosts }
+    return { posts, error }
   },
 }
 </script>
+
+<style>
+  .home {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+  }
+</style>
