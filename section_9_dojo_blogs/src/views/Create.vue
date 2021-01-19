@@ -21,9 +21,13 @@
 
 <script>
 import {ref} from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
     setup() {
+
+        const router = useRouter()
+
         const title = ref('')
         const body = ref('')
         const tag = ref('')
@@ -48,8 +52,7 @@ export default {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(post)
             })
-            // pas de redirection dans le corrigé de Shaun
-            //comment utiliser le routeur dans setup() ???
+            router.push({name: 'Home'})
         }
 
         return {title, body, tag, handleKeydown, tags, handleSubmit}
