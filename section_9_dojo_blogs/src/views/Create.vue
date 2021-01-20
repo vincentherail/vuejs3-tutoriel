@@ -14,7 +14,7 @@
         <div v-for="tag in tags" :key="tag" class="pill">
             #{{ tag }}
         </div>
-        <button @click="handleSubmit">Add Post</button>
+        <button>Add Post</button>
       </form>
   </div>
 </template>
