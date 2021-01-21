@@ -18,7 +18,6 @@ export default {
            let docs = snap.docs.map(doc => {
                return {...doc.data(), id: doc.id}
            })
-           console.log(docs)
            posts.value = docs
        })
 
