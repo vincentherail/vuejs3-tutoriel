@@ -2,7 +2,7 @@
   <nav v-if="user">
     <div>
         <p>Hey {{ user.displayName }} </p>
-        <p class="email">Currently logged in as {{ user.email }} email</p>
+        <p class="email">Currently logged in as {{ user.email }}</p>
     </div>
     <button @click="handleClick">Logout</button>
   </nav>

@@ -11,14 +11,26 @@ const requireAuth = (to, from, next) => {
   } else {
     next()
   }
-  // demande au routeur de continuer sur sa logique (de charger la page demandé)
+}
+
+const requireNoAuth = (to, from, next) => {
+  let user = projectAuth.currentUser
+  // si user logged in
+  if (user) {
+    // redirect to chatroom
+    next({name: 'Chatroom'})
+  } else {
+    // sinon continue le processus (en l'occurence ce sera welcome)
+    next()
+  }
 }
 
 const routes = [
   {
     path: '/',
     name: 'Welcome',
-    component: Welcome
+    component: Welcome,
+    beforeEnter: requireNoAuth
   },
   {
     path: '/chatroom',
