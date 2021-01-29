@@ -1,10 +1,17 @@
 <template>
   <!-- Tout sera chargé dans cette div -->
   <div class="content">
+    <Navbar/>
     <router-view/>
   </div>
 </template>
 
+<script>
+import Navbar from './components/Navbar'
+export default {
+  components:{Navbar}
+}
+</script>
 <style>
   .content{
     margin: 0 auto;
