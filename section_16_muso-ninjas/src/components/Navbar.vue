@@ -4,17 +4,41 @@
           <img src="@/assets/muso.png" alt="">
           <h1><router-link :to="{name:'Home'}">Muso Ninjas</router-link></h1>
           <div class="links">
-              <button>Logout</button>
-              <router-link class="btn" :to="{ name: 'Signup'}">Signup</router-link>
-              <router-link class="btn" :to="{ name: 'Login'}">Login</router-link>
+              <!-- Visible s'il y a un User -->
+              <button @click="handleClick" v-if="user">Logout</button>
+              <!-- Visible s'il n'y a pas d'User -->
+              <div v-else>
+                <router-link class="btn" :to="{ name: 'Signup'}">Signup</router-link>
+                <router-link class="btn" :to="{ name: 'Login'}"> Login</router-link>
+              </div>
           </div>
       </nav>
   </div>
 </template>
 
 <script>
-export default {
+import useLogout from '../composables/useLogout'
+// Charge le composable
+import getUser from '../composables/getUser'
+import {useRouter} from 'vue-router'
 
+export default {
+    setup() {
+        const { error, logout, isPending } = useLogout()
+        // récupère la variable du composable 
+        const { user } = getUser()
+        const router = useRouter()
+
+        const handleClick = async () => {
+            await logout()
+            if(!error.value) {
+                console.log('user logged out !')
+                router.push({ name: 'Login'})
+            }
+        }
+
+        return { error, isPending, user, handleClick}
+    }
 }
 </script>
 
