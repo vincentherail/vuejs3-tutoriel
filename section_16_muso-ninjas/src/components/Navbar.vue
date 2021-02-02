@@ -57,6 +57,7 @@ nav{
 nav h1{
     margin-left: 20px;
 }
+/* Astuce pour éviter un flex space-between */
 nav .links{
     margin-left: auto;
 }
