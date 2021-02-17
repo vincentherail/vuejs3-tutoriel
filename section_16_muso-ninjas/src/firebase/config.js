@@ -5,12 +5,12 @@ import 'firebase/storage'
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAN3ZNh8Vb-fl3K0dgUThz9mjsOYCfzx7Q",
-  authDomain: "muso-ninjas-b6131.firebaseapp.com",
-  projectId: "muso-ninjas-b6131",
-  storageBucket: "muso-ninjas-b6131.appspot.com",
-  messagingSenderId: "60941302678",
-  appId: "1:60941302678:web:2352bc24cfe3f89d8d3bb7"
+  apiKey: process.env.VUE_APP_APIKEY,
+  authDomain: process.env.VUE_APP_AUTHDOMAIN,
+  projectId: process.env.VUE_APP_PROJECTID,
+  storageBucket: process.env.VUE_APP_STORAGEBUCKET,
+  messagingSenderId: process.env.VUE_APP_MESSAGINGSENDERID,
+  appId: process.env.VUE_APP_APPID
 };
 
 // init firebase
