@@ -29,31 +29,5 @@ export default {
 </script>
 
 <style>
-/* enter classes */
-.toast-enter-from{
-  opacity: 0;
-  /* bring up from the screen */
-  transform: translateY(-60px)
-}
-.toast-enter-to{
-  opacity: 1;
-  /* bring it back down in the screen */
-  transform: translateY(0)
-}
-.toast-enter-active{
-  transition: all 0.3s ease;
-}
 
-/* leave classes */
-.toast-leave-from{
-  opacity: 1;
-  transform: translateY(0)
-}
-.toast-leave-to{
-  opacity: 0;
-  transform: translateY(-60px)
-}
-.toast-leave-active{
-  transition: all 0.3s ease;
-}
 </style>
