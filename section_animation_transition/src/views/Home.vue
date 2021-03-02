@@ -4,7 +4,6 @@
       <Toast v-if="showToast" />
     </transition>
     <Todos @badValue="triggerToast" />
-
   </div>
 </template>
 
