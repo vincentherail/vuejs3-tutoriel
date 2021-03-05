@@ -32,12 +32,12 @@ export default {
         opacity: 1,
         // fait rebondir l'element
         ease: 'bounce.out',
+        // on passe au hook suivant une fois cette anim finie
         onComplete: done
       })
     }
     const afterEnter = (el) => {
       console.log('after enter ')
-
     }
 
     return {  beforeEnter, enter, afterEnter }

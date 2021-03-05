@@ -1,17 +1,21 @@
 <template>
   <div class="contact">
     <h1>Contact</h1>
-    <ul>
-      <li v-for="icon in icons" :key="icon.name">
+    <transition-group appear 
+    tag="ul"
+    @before-enter="beforeEnter"
+    @enter="enter">
+      <li v-for="(icon, index) in icons" :key="icon.name" :data-index="index">
         <span class="material-icons">{{ icon.name }}</span>
         <div>{{ icon.text }}</div>
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 
 <script>
 import { ref } from 'vue'
+import gsap from 'gsap'
 
 export default {
   setup() {
@@ -21,8 +25,25 @@ export default {
       { name: 'local_post_office', text: 'by post'},
       { name: 'local_fire_department', text: 'by smoke signal'},
     ])
-
-    return { icons }
+    
+    const beforeEnter = (el) => {
+      console.log('before enter - set initial state')
+      el.style.transform ='translateY(100px)'
+      el.style.opacity = 0
+    }
+    const enter = (el, done) => {
+      console.log('starting enter - make transition')
+      gsap.to(el, {
+        duration: 0.8,
+        y: 0,
+        opacity: 1,
+        // on passe au hook suivant une fois cette anim finie
+        onComplete: done,
+        // delay multiplié par l'index de chaque element
+        delay: el.dataset.index * 0.2
+      })
+    }
+    return { icons, beforeEnter, enter }
   }
 }
 </script>
