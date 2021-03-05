@@ -7,8 +7,8 @@
       placeholder="Add a new todo..."
     />
     <div v-if="todos.length">
-      <!-- Tag Permettra de transformer la tag en ul -->
-      <transition-group tag="ul" name="list">
+      <!-- appear déclenche au chargement de la page -->
+      <transition-group tag="ul" name="list" appear>
         <li v-for="todo in todos" :key="todo.id" @click="deleteTodo(todo.id)">
           {{ todo.text }}
         </li>
@@ -102,5 +102,11 @@ export default {
 }
 .list-leave-active{
   transition: all 0.3s ease;
+  position: absolute;
+}
+
+/* permet d'activer la transition lorsque l'item se déplace */
+.list-move {
+  transition: all 0.3s ease
 }
 </style>
